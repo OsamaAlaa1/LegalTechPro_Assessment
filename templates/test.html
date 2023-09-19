@@ -1,0 +1,59 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chatbox</title>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-output" id="chat-output"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button id="send-button">Send</button>
+    </div>
+    <script>
+        // script.js
+        const chatOutput = document.getElementById('chat-output');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Function to add a message to the chat output
+        function addMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.innerText = message;
+            chatOutput.appendChild(messageElement);
+        }
+
+        // Event listener for the Send button
+        sendButton.addEventListener('click', async () => {
+            const userMessage = userInput.value;
+            if (userMessage.trim() === '') return;
+
+            addMessage(userMessage, 'user');
+            userInput.value = '';
+
+            // Send user message to FastAPI server and get a response
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const aiResponse = data.message;
+                addMessage(aiResponse, 'ai');
+            }
+        });
+
+    </script>
+</body>
+
+</html>
