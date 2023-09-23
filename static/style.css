@@ -1,6 +1,9 @@
 /* Update the IDs for chat elements */
-#user-input-contract {
-    width: 100%;
+#user-input-contract,
+#user-input-negotiation,
+#user-input-simulate,
+#user-input-tune{
+    width: 70%;
     padding: 10px;
     border: 1px solid #fff;
     border-radius: 5px;
@@ -9,7 +12,9 @@
 }
 
 #send-button-contract,
-#send-button-negotiation {
+#send-button-negotiation,
+#send-button-simulate,
+#send-button-tune{
     background-color: #5285DA;
     color: #fff;
     border: none;
@@ -21,7 +26,9 @@
 }
 
 #send-button-contract:hover,
-#send-button-negotiation:hover {
+#send-button-negotiation:hover,
+#send-button-simulate:hover ,
+#send-button-tune:hover  {
     background-color: #0056b3;
 }
 
@@ -91,7 +98,10 @@
 #download-button2,
 #download-button3,
 #download-button4,
-#download-button5{
+#download-button5,
+#chat-box-container,
+#fine-tune-button{
+
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }

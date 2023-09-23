@@ -1,0 +1,180 @@
+[
+    {
+        "scenario_id": 1,
+        "title": "Car Dealership",
+        "description": "Negotiate the sale of a family car at a dealership.",
+        "difficulty": "Easy",
+        "prompt": "You are a car salesperson selling a family car to a couple with kids. They are interested but concerned about safety features. How do you address their concerns?"
+    },
+    {
+        "scenario_id": 2,
+        "title": "Tech Gadgets",
+        "description": "Sell the latest tech gadgets at an electronics store.",
+        "difficulty": "Medium",
+        "prompt": "You work at an electronics store and need to convince a customer to buy the latest tech gadgets. The customer is interested but wants to know about the warranty and support. How do you close the deal?"
+    },
+    {
+        "scenario_id": 3,
+        "title": "Home Appliances",
+        "description": "Sell high-end home appliances to a homeowner.",
+        "difficulty": "Hard",
+        "prompt": "You are a salesperson offering high-end home appliances to a homeowner. The homeowner is interested but worried about energy efficiency. How do you persuade them to make the purchase?"
+    },
+    {
+        "scenario_id": 4,
+        "title": "Jewelry Store",
+        "description": "Sell jewelry at a high-end boutique.",
+        "difficulty": "Medium",
+        "prompt": "You are a salesperson at a high-end jewelry boutique. A customer is interested in a diamond necklace but has concerns about authenticity. How do you gain their trust and close the sale?"
+    },
+    {
+        "scenario_id": 5,
+        "title": "Smart Home Solutions",
+        "description": "Promote smart home solutions to homeowners.",
+        "difficulty": "Hard",
+        "prompt": "You represent a company that offers smart home solutions. Convince a homeowner to upgrade their home with automation features. The homeowner is interested but wants to know about data privacy. How do you address their concerns?"
+    },
+    {
+        "scenario_id": 6,
+        "title": "Vacation Packages",
+        "description": "Sell vacation packages to travelers.",
+        "difficulty": "Medium",
+        "prompt": "You are a travel agent selling vacation packages to a group of friends. They are interested but want a better deal. How do you negotiate and close the sale?"
+    },
+    {
+        "scenario_id": 7,
+        "title": "Fitness Equipment",
+        "description": "Sell fitness equipment to a fitness enthusiast.",
+        "difficulty": "Medium",
+        "prompt": "You work at a fitness equipment store and need to convince a fitness enthusiast to buy exercise equipment. They are interested but concerned about available space. How do you address their concerns?"
+    },
+    {
+        "scenario_id": 8,
+        "title": "Luxury Watches",
+        "description": "Sell luxury watches at a high-end boutique.",
+        "difficulty": "Hard",
+        "prompt": "You are a salesperson at a luxury watch boutique. A customer is interested in a limited-edition watch but has concerns about the price. How do you persuade them to make the purchase?"
+    },
+    {
+        "scenario_id": 9,
+        "title": "Computer Systems",
+        "description": "Promote customized computer systems to businesses.",
+        "difficulty": "Medium",
+        "prompt": "You are a sales representative for a computer system company. Convince a business owner to invest in customized computer systems. The business owner is interested but wants to know about scalability. How do you address their concerns?"
+    },
+    {
+        "scenario_id": 10,
+        "title": "Art Gallery",
+        "description": "Sell artworks at an art gallery.",
+        "difficulty": "Medium",
+        "prompt": "You work at an art gallery and need to convince an art enthusiast to purchase a valuable artwork. They are interested but concerned about the authenticity and provenance. How do you provide reassurance and close the sale?"
+    },
+    {
+        "scenario_id": 11,
+        "title": "High-End Fashion",
+        "description": "Sell high-end fashion items at a boutique.",
+        "difficulty": "Medium",
+        "prompt": "You are a salesperson at a high-end fashion boutique. Convince a fashion-conscious customer to buy the latest designer collection. The customer is interested but hesitant due to the price. How do you close the sale?"
+    },
+    {
+        "scenario_id": 12,
+        "title": "Outdoor Adventure Gear",
+        "description": "Sell outdoor adventure gear to outdoor enthusiasts.",
+        "difficulty": "Hard",
+        "prompt": "You are a sales representative for outdoor adventure gear. Convince outdoor enthusiasts to invest in high-quality gear for their expeditions. They are interested but want to know about durability and warranties. How do you address their concerns?"
+    },
+    {
+        "scenario_id": 13,
+        "title": "Home Renovation Services",
+        "description": "Promote home renovation services to homeowners.",
+        "difficulty": "Medium",
+        "prompt": "You represent a home renovation company. Convince a homeowner to renovate their home. The homeowner is interested but wants to know about project timelines and costs. How do you provide clarity and close the deal?"
+    },
+    {
+        "scenario_id": 14,
+        "title": "Luxury Real Estate",
+        "description": "Sell luxury real estate properties to high-net-worth individuals.",
+        "difficulty": "Hard",
+        "prompt": "You are a real estate agent specializing in luxury properties. Convince a high-net-worth individual to invest in a premium real estate property. They are interested but concerned about property appreciation. How do you address their concerns and close the deal?"
+    },
+    {
+        "scenario_id": 15,
+        "title": "Healthcare Solutions",
+        "description": "Promote healthcare solutions to medical professionals.",
+        "difficulty": "Medium",
+        "prompt": "You represent a healthcare technology company. Convince medical professionals to adopt your advanced healthcare solutions. They are interested but want to know about data security. How do you address their concerns and close the deal?"
+    },
+    {
+        "scenario_id": 16,
+        "title": "Commercial Insurance",
+        "description": "Sell commercial insurance policies to business owners.",
+        "difficulty": "Medium",
+        "prompt": "You are an insurance agent offering commercial insurance policies to business owners. Convince a business owner to secure comprehensive insurance coverage. They are interested but want to know about claim processing. How do you provide assurance and close the deal?"
+    },
+    {
+        "scenario_id": 17,
+        "title": "Restaurant Equipment",
+        "description": "Sell restaurant equipment to restaurant owners.",
+        "difficulty": "Medium",
+        "prompt": "You work for a restaurant equipment supplier. Convince a restaurant owner to purchase kitchen equipment for their new restaurant. They are interested but concerned about maintenance costs. How do you address their concerns and close the sale?"
+    },
+    {
+        "scenario_id": 18,
+        "title": "Solar Energy Solutions",
+        "description": "Promote solar energy solutions to homeowners.",
+        "difficulty": "Medium",
+        "prompt": "You represent a solar energy company. Convince homeowners to adopt solar energy solutions for their homes. They are interested but want to know about savings and ROI. How do you provide a compelling case and close the deal?"
+    },
+    {
+        "scenario_id": 19,
+        "title": "Educational Software",
+        "description": "Sell educational software to schools and educational institutions.",
+        "difficulty": "Medium",
+        "prompt": "You are a sales representative for an educational software company. Convince a school principal to implement your software for online learning. The principal is interested but concerned about user support. How do you provide reassurance and close the deal?"
+    },
+    {
+        "scenario_id": 20,
+        "title": "Financial Investment",
+        "description": "Sell financial investment products to potential investors.",
+        "difficulty": "Medium",
+        "prompt": "You are a financial advisor promoting investment products to potential investors. Convince an individual to invest in a diversified portfolio. The investor is interested but wants to know about risk management. How do you address their concerns and close the deal?"
+    },
+
+    
+    {
+        "scenario_id": 21,
+        "title": "Electronic Gadgets Store",
+        "description": "Sell electronic gadgets at a retail store.",
+        "difficulty": "Easy",
+        "prompt": "You work at an electronics retail store and need to convince a customer to buy a new smartphone. The customer is interested but has questions about the camera features. How do you highlight the camera's capabilities and close the sale?"
+    },
+    {
+        "scenario_id": 22,
+        "title": "Bookstore",
+        "description": "Promote bestselling books at a local bookstore.",
+        "difficulty": "Easy",
+        "prompt": "You are a salesperson at a local bookstore. Convince a customer to purchase a bestselling novel. The customer is interested but wants to know about the book's plot. How do you describe the story and close the sale?"
+    },
+    {
+        "scenario_id": 23,
+        "title": "Pet Store",
+        "description": "Sell pet accessories at a pet supply store.",
+        "difficulty": "Easy",
+        "prompt": "You work at a pet supply store and need to convince a customer to buy a pet bed. The customer is interested but wants to know about the bed's comfort. How do you explain the features and close the sale?"
+    },
+    {
+        "scenario_id": 24,
+        "title": "Home Decor",
+        "description": "Sell decorative items at a home decor boutique.",
+        "difficulty": "Easy",
+        "prompt": "You are a salesperson at a home decor boutique. Convince a customer to purchase a decorative vase. The customer is interested but wants to know how the vase complements home interiors. How do you describe its aesthetic appeal and close the sale?"
+    },
+    {
+        "scenario_id": 25,
+        "title": "Clothing Boutique",
+        "description": "Promote clothing items at a boutique.",
+        "difficulty": "Easy",
+        "prompt": "You work at a boutique and need to convince a customer to buy a stylish dress. The customer is interested but has questions about the dress's fabric. How do you explain the fabric's quality and close the sale?"
+    }
+    
+]

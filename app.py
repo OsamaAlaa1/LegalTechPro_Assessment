@@ -1,15 +1,26 @@
 # Import needed functions and libraries
 from utilities import *
 from flask import Flask, request, render_template, jsonify, send_file
-import openai
-from pydantic import BaseModel
-import langchain
 import json 
 import os
-
+import random
 # Create a Flask app instance
 app = Flask(__name__)
 
+
+# define global variable 
+tasks_result_file_names = { 
+        "analysis":'', 
+        "suggestions":'',
+        "history":'',
+        "summary":'',
+        "check":'',
+        "simulate":'',
+        "tune":''
+        }
+
+difficulty = None
+target_scenario = None
 
 # Define route for the home page
 @app.route("/")
@@ -23,6 +34,9 @@ def home():
         str: The rendered home page template.
     """
     return render_template("home.html")
+
+
+#-------------------------------------------------Task 1-------------------------------------
 
 # Define route for uploading clauses
 @app.route("/upload_clauses", methods=["POST"])
@@ -41,6 +55,8 @@ def upload_clauses():
 
             upload_dir = os.path.join(app.root_path, "test_files")
             file_path = handle_file_upload(uploaded_file, upload_dir, "01_clauses")
+        
+
 
             if not file_path:
                 return 'File upload failed.', 500
@@ -55,50 +71,15 @@ def upload_clauses():
                 result_content += f'>> Interpretation and Analysis For the Clause \" {clauses[id]}\" :\n\n{result}\n\n-----------------------------------------------------------------------------------\n\n'
             
             result_filename = generate_result_file(result_dir, "01_clauses_analysis", result_content)
+    
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['analysis'] = result_filename
 
             return 'File uploaded successfully!'
         except Exception as e:
             return str(e), 500
-
-# Define route for uploading contract information
-@app.route('/upload_info', methods=['POST'])
-def upload_info():
-    """
-    Route for uploading contract information.
-
-    Returns:
-        str: A message indicating the success or failure of the file upload.
-    """
-    if request.method == "POST":
-        try:
-            uploaded_file = request.files["file"]
-            if not uploaded_file:
-                return 'No file provided in the request.', 400
-
-            upload_dir = os.path.join(app.root_path, "test_files")
-            file_path = handle_file_upload(uploaded_file, upload_dir, "02_contract_info")
-
-            if not file_path:
-                return 'File upload failed.', 500
-
-            with open(file_path, 'r') as file:
-                data = json.load(file)
-
-            standard_terms = data.get("standard_terms", "")
-            previous_data = data.get("previous_data", "")
-            current_context = data.get("current_context", "")
-            suggestions = suggest_contract_clauses(standard_terms, previous_data, current_context)
-
-            result_dir = os.path.join(app.root_path, "result_files")
-            result_content = "Based on Terms, Previous Data, and Context the Contract Clause Suggestions: \n"
-            for i, suggestion in enumerate(suggestions, start=1):
-                result_content += f"{i}. {suggestion}\n"
-            
-            result_filename = generate_result_file(result_dir, "02_clauses_suggestions", result_content)
-
-            return 'File uploaded and saved successfully!'
-        except Exception as e:
-            return str(e), 500
+        
 
 # Handle user messages and query OpenAI for clause analysis
 @app.route('/analyze_clause', methods=['POST'])
@@ -117,9 +98,76 @@ def analyze_clause():
     except Exception as e:
         return jsonify({'error': 'An error occurred during analysis'})
 
-# ... (continue defining routes for other tasks)
 
-# ... (previous code)
+#-------------------------------------------------Task 2-------------------------------------
+
+# Define route for uploading contract information
+@app.route('/upload_info', methods=['POST'])
+def upload_info():
+    """
+    Route for uploading contract information.
+
+    Returns:
+        str: A message indicating the success or failure of the file upload.
+    """
+    if request.method == "POST":
+        try:
+            uploaded_file = request.files["file"]
+            if not uploaded_file:
+                return 'No file provided in the request.', 400
+
+            upload_dir = os.path.join(app.root_path, "test_files")
+            file_path = handle_file_upload(uploaded_file, upload_dir, "02_contract_info",extention = 'json')
+
+
+            if not file_path:
+                return 'File upload failed.', 500
+
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+
+            # Convert the entire contract_data dictionary to a JSON string
+            contract_data_str = json.dumps(data, indent=2)
+            suggestions = suggest_contract_clauses(contract_data_str)
+
+            result_dir = os.path.join(app.root_path, "result_files")
+            result_content = f"Based on Terms, Previous Data, and Context the Contract Clause Suggestions: \n\n {suggestions}"
+            
+            # save the suggestions  
+            result_filename = generate_result_file(result_dir, "02_clauses_suggestions", result_content)
+
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['suggestions'] = result_filename
+
+            return 'File uploaded and saved successfully!'
+        except Exception as e:
+            return str(e), 500
+
+
+#-------------------------------------------------Task 3-------------------------------------
+
+
+# Handle user messages and query OpenAI for clause analysis
+@app.route('/assist', methods=['POST'])
+def assist():
+    """
+    Route for analyzing contract clauses.
+
+    Returns:
+        JSON: A JSON response containing the analysis result.
+    """
+    try:
+        if request.method == 'POST':
+            user_message = request.form['userMessage']
+            analysis = real_time_negotiation_assistance(user_message)
+            return jsonify({'response': analysis})
+    except Exception as e:
+        return jsonify({'error': 'An error occurred during analysis'})
+
+
+
+#-------------------------------------------------Task 4-------------------------------------
 
 # Define route for uploading historical negotiation data
 @app.route("/upload_history", methods=["POST"])
@@ -138,6 +186,8 @@ def upload_history():
 
             upload_dir = os.path.join(app.root_path, "test_files")
             file_path = handle_file_upload(uploaded_file, upload_dir, "04_historical_data")
+            
+
 
             if not file_path:
                 return 'File upload failed.', 500
@@ -150,10 +200,17 @@ def upload_history():
             result_content = f'>> Analysis of the historical negotiation data:\n\n{history_results}\n\n-----------------------------------------------------------------------------------\n\n'
             
             result_filename = generate_result_file(result_dir, "04_historical_analysis", result_content)
+            
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['history'] = result_filename
 
             return 'File uploaded successfully!'
         except Exception as e:
             return str(e), 500
+
+
+#-------------------------------------------------Task 5-------------------------------------
 
 # Define route for uploading negotiation details
 @app.route("/upload_negotiation", methods=["POST"])
@@ -173,6 +230,7 @@ def upload_negotiation():
             upload_dir = os.path.join(app.root_path, "test_files")
             file_path = handle_file_upload(uploaded_file, upload_dir, "05_negotiation_details")
 
+
             if not file_path:
                 return 'File upload failed.', 500
 
@@ -185,10 +243,16 @@ def upload_negotiation():
             result_content = f'>> Summarize Negotiation Details:\n\n{negotiation_summary}\n\n-----------------------------------------------------------------------------------\n\n'
             
             result_filename = generate_result_file(result_dir, "05_negotiation_summary", result_content)
+            
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['summary'] = result_filename
 
             return 'File uploaded successfully!'
         except Exception as e:
             return str(e), 500
+#-------------------------------------------------Task 6-------------------------------------
+
 
 # Define route for performing an ethical check on negotiation text
 @app.route("/ethical_check", methods=["POST"])
@@ -206,7 +270,9 @@ def ethical_check():
                 return 'No file provided in the request.', 400
 
             upload_dir = os.path.join(app.root_path, "test_files")
-            file_path = handle_file_upload(uploaded_file, upload_dir, "06_negotiation_to_check")
+            file_path = handle_file_upload(uploaded_file, upload_dir, "06_negotiation_to_check",extention='json')
+
+
 
             if not file_path:
                 return 'File upload failed.', 500
@@ -214,19 +280,177 @@ def ethical_check():
             with open(file_path, "r") as file:
                 data = json.load(file)
 
-            negotiation_text = data['negotiation_text']
+            # Convert the JSON data to a string
+            negotiation_data_str = json.dumps(data)
             industry = data['industry']
 
-            guidance = ensure_compliance_and_ethical_standards(negotiation_text, industry)
+            guidance = ensure_compliance_and_ethical_standards(negotiation_data_str, industry)
 
             result_dir = os.path.join(app.root_path, "result_files")
             result_content = f'>> Ethical & Compliance Check:\n\n{guidance}\n\n-----------------------------------------------------------------------------------\n\n'
             
             result_filename = generate_result_file(result_dir, "06_ethical_check_results", result_content)
+            
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['check'] = result_filename
 
             return 'File uploaded successfully!'
         except Exception as e:
             return str(e), 500
+
+
+
+#-------------------------------------------------Task 7-------------------------------------
+
+
+
+@app.route('/get_scenario_prompt', methods=['GET'])
+def get_scenario_prompt():
+    
+    # Load negotiation scenarios from a JSON file
+    with open(tasks_result_file_names['simulate'], 'r') as file:
+        negotiation_scenarios = json.load(file)
+
+    try:
+        global difficulty
+        global target_scenario
+        difficulty = request.args.get('difficulty')
+        
+        # Find all scenarios matching the specified difficulty
+        matching_scenarios = [scenario for scenario in negotiation_scenarios if scenario['difficulty'] == difficulty]
+
+        if matching_scenarios:
+            # Choose a random scenario from the matching ones
+            target_scenario = random.choice(matching_scenarios)['prompt']
+            return jsonify({'prompt': target_scenario})
+
+        else:
+            return jsonify({'prompt': 'Scenario not found'})
+    except Exception as e:
+        return jsonify({'prompt': 'An error occurred'})
+
+
+@app.route("/upload_scenarios", methods=["POST"])
+def upload_scenarios():
+    """
+    Route for uploading negotiation scenarios.
+
+    Returns:
+        str: A message indicating the success or failure of the file upload.
+    """
+    if request.method == "POST":
+        try:
+            uploaded_file = request.files["file"]
+            if not uploaded_file:
+                return 'No file provided in the request.', 400
+
+            upload_dir = os.path.join(app.root_path, "test_files")
+            file_path = handle_file_upload(uploaded_file, upload_dir, "07_negotiation_scenarios", extention='json')
+
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['simulate'] = file_path            
+
+
+            return 'File uploaded successfully!'
+        except Exception as e:
+            return str(e), 500
+
+@app.route('/simulate', methods=['POST'])
+def simulate():
+    
+    global difficulty
+    global target_scenario
+
+    
+    try:
+        if request.method == 'POST':
+            user_message = request.form['userMessage']
+            
+            if difficulty != None : 
+
+                # Combine user's message and scenario prompt to create the final prompt
+                response = simulate_negotiation(user_message,target_scenario)
+
+                # Return the AI's response
+                return jsonify({'response': response})
+
+            else:
+                return jsonify({'response': 'You need to select difficulty level first'})
+
+
+    except Exception as e:
+        return jsonify({'error': 'An error occurred during response'})
+
+
+#-------------------------------------------------Task 8-------------------------------------
+
+
+@app.route("/upload_tune_scenarios", methods=["POST"])
+def upload_tune_scenarios():
+    """
+    Route for uploading negotiation scenarios.
+
+    Returns:
+        str: A message indicating the success or failure of the file upload.
+    """
+    if request.method == "POST":
+        try:
+            uploaded_file = request.files["file"]
+            if not uploaded_file:
+                return 'No file provided in the request.', 400
+
+            upload_dir = os.path.join(app.root_path, "test_files")
+            file_path = handle_file_upload(uploaded_file, upload_dir, "08_incremental_tune_scenarios", extention='jsonl')
+
+            #append the result file name 
+            global tasks_result_file_names
+            tasks_result_file_names['tune'] = file_path            
+
+
+            return 'File uploaded successfully!'
+        except Exception as e:
+            return str(e), 500
+
+# Handle user messages and query OpenAI for clause analysis
+@app.route('/fine_tune', methods=['POST'])
+def tuned_simulation():
+    """
+    Route for analyzing contract clauses.
+
+    Returns:
+        JSON: A JSON response containing the analysis result.
+    """
+    try:
+        if request.method == 'POST':
+            user_message = request.form['userMessage']
+            response = fine_tuned_simulation(user_message)
+            return jsonify({'response': response})
+    except Exception as e:
+        return jsonify({'error': 'An error occurred during analysis'})
+
+
+@app.route('/increment_tune', methods=['POST'])
+def increment_tune():
+    
+    # load the file 
+    file_info= load_jsonl_file(tasks_result_file_names['tune'])
+    
+    # get the id 
+    file_id = dict(file_info)["id"]
+    
+    # fine tune it 
+    model_info = fine_tune(file_id)
+
+    # get the model id 
+    model_id = dict(model_info)["id"]
+
+
+    return "New file tuned successfully !"
+
+
+# ---------------------------------------------------- end of tasks--------------------------------------------
 
 # Define a dynamic route for downloading files
 @app.route("/download/<file_name>")
@@ -234,11 +458,11 @@ def download_file(file_name):
     global tasks_result_file_names
     # Define a dictionary to map file_name to actual file paths
     file_paths = {
-        "analysis": f"result_files/{tasks_result_file_names[0]}",
-        "suggestions": f"result_files/{tasks_result_file_names[1]}",
-        "history": f"result_files/{tasks_result_file_names[2]}",
-        "summary": f"result_files/{tasks_result_file_names[3]}",
-        "check": f"result_files/{tasks_result_file_names[4]}"
+        "analysis": f"result_files/{tasks_result_file_names['analysis']}",
+        "suggestions": f"result_files/{tasks_result_file_names['suggestions']}",
+        "history": f"result_files/{tasks_result_file_names['history']}",
+        "summary": f"result_files/{tasks_result_file_names['summary']}",
+        "check": f"result_files/{tasks_result_file_names['check']}"
         # Add more mappings as needed
     }
     
@@ -252,9 +476,12 @@ def download_file(file_name):
 
 
 
+
+
 # Run the Flask app
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
+
 
 
 

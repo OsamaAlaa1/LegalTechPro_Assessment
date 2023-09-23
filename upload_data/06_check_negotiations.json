@@ -1,0 +1,31 @@
+{
+    "industry": "Software and Technology",
+    "negotiation_scenario": "Software Licensing Agreement",
+    "parties": {
+        "your_company": "Your Company, Inc. (YC)",
+        "counterparty": "Software Solutions Corp. (SSC)"
+    },
+    "background": "YC is in need of software solutions to enhance its operations. SSC offers specialized software solutions for the industry. Both parties are eager to enter a licensing agreement.",
+    "key_negotiation_points": [
+        {
+            "point": "Software Licensing Terms",
+            "yc_preference": "Non-exclusive license",
+            "ssc_preference": "Limited exclusive license"
+        },
+        {
+            "point": "Payment Terms",
+            "yc_preference": "Annual payments",
+            "ssc_preference": "Monthly payments"
+        },
+        {
+            "point": "Data Privacy",
+            "yc_requirement": "Strict adherence to data privacy regulations",
+            "ssc_assurance": "Compliance with GDPR and other relevant regulations"
+        },
+        {
+            "point": "Indemnification",
+            "yc_request": "Indemnification against software defects",
+            "ssc_agreement": "Agreement to indemnify"
+        }
+    ]
+}

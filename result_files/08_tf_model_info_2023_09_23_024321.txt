@@ -1,0 +1,18 @@
+{
+  "object": "fine_tuning.job",
+  "id": "ftjob-9ukdyjz4HmspYsjIH7XcGuoo",
+  "model": "gpt-3.5-turbo-0613",
+  "created_at": 1695426197,
+  "finished_at": null,
+  "fine_tuned_model": null,
+  "organization_id": "org-l7NfrIFhxjMB1AvXLojMIkGJ",
+  "result_files": [],
+  "status": "validating_files",
+  "validation_file": null,
+  "training_file": "file-1ly6nijPcg8dfOXDGzDKOy09",
+  "hyperparameters": {
+    "n_epochs": "auto"
+  },
+  "trained_tokens": null,
+  "error": null
+}
